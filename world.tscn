@@ -2,18 +2,20 @@
 
 [ext_resource type="Texture2D" uid="uid://6lcvfussclm1" path="res://splat-Sheet.png" id="1_f3sb7"]
 [ext_resource type="Script" uid="uid://dhgcvq0rl3i56" path="res://splat.gd" id="1_fj7yv"]
-[ext_resource type="Script" uid="uid://c84lkdks07cwk" path="res://spot.gd" id="1_tlwt5"]
+[ext_resource type="Script" uid="uid://dnalx06htl4xn" path="res://target_good_area.gd" id="4_aqk2v"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3xd07"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jq8tk"]
 size = Vector2(20, 22)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4ao1p"]
+size = Vector2(26, 28)
+
 [node name="world" type="Node2D" unique_id=280545579]
 
 [node name="spot1" type="Area2D" parent="." unique_id=2001070808]
 position = Vector2(22, 340)
-script = ExtResource("1_tlwt5")
 metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="spot1" unique_id=1676141323]
@@ -26,11 +28,12 @@ metadata/_edit_group_ = true
 [node name="CollisionShape2D" type="CollisionShape2D" parent="spot2" unique_id=1636843967]
 shape = SubResource("RectangleShape2D_3xd07")
 
-[node name="splat" type="RigidBody2D" parent="." unique_id=1129235712]
+[node name="splat" type="RigidBody2D" parent="." unique_id=1129235712 node_paths=PackedStringArray("good_zone")]
 position = Vector2(316, 167)
 gravity_scale = 0.0
 script = ExtResource("1_fj7yv")
 targets = [NodePath("../spot1"), NodePath("../spot2")]
+good_zone = NodePath("../target_good_area")
 metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="splat" unique_id=1913605558]
@@ -44,5 +47,22 @@ frame = 1
 position = Vector2(-1, 0)
 shape = SubResource("RectangleShape2D_jq8tk")
 
+[node name="target_good_area" type="Area2D" parent="." unique_id=1926519423]
+position = Vector2(316, 167)
+script = ExtResource("4_aqk2v")
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="target_good_area" unique_id=238458523]
+texture_filter = 1
+texture = ExtResource("1_f3sb7")
+hframes = 3
+vframes = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="target_good_area" unique_id=1763182940]
+position = Vector2(-1, 0)
+shape = SubResource("RectangleShape2D_4ao1p")
+
 [connection signal="body_entered" from="spot1" to="splat" method="_on_spot_1_body_entered"]
 [connection signal="body_entered" from="spot2" to="splat" method="_on_spot_1_body_entered"]
+[connection signal="body_entered" from="target_good_area" to="target_good_area" method="_on_body_entered"]
+[connection signal="body_exited" from="target_good_area" to="target_good_area" method="_on_body_exited"]
