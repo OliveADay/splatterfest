@@ -1,3 +1,43 @@
 [gd_scene format=3 uid="uid://dbbhbygyjlj4c"]
 
+[ext_resource type="Texture2D" uid="uid://6lcvfussclm1" path="res://splat-Sheet.png" id="1_f3sb7"]
+[ext_resource type="Script" uid="uid://dhgcvq0rl3i56" path="res://splat.gd" id="1_fj7yv"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3xd07"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jq8tk"]
+size = Vector2(20, 22)
+
 [node name="world" type="Node2D" unique_id=280545579]
+
+[node name="spot1" type="Area2D" parent="." unique_id=2001070808]
+position = Vector2(22, 159)
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="spot1" unique_id=1676141323]
+shape = SubResource("RectangleShape2D_3xd07")
+
+[node name="spot2" type="Area2D" parent="." unique_id=1344319987]
+position = Vector2(625, 164)
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="spot2" unique_id=1636843967]
+shape = SubResource("RectangleShape2D_3xd07")
+
+[node name="splat" type="RigidBody2D" parent="." unique_id=1129235712]
+position = Vector2(316, 167)
+gravity_scale = 0.0
+script = ExtResource("1_fj7yv")
+targets = [NodePath("../spot1"), NodePath("../spot2")]
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="splat" unique_id=1913605558]
+texture_filter = 1
+texture = ExtResource("1_f3sb7")
+hframes = 3
+vframes = 2
+frame = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="splat" unique_id=377789056]
+position = Vector2(-1, 0)
+shape = SubResource("RectangleShape2D_jq8tk")
