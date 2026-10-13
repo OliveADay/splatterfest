@@ -2,6 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://6lcvfussclm1" path="res://splat-Sheet.png" id="1_f3sb7"]
 [ext_resource type="Script" uid="uid://dhgcvq0rl3i56" path="res://splat.gd" id="1_fj7yv"]
+[ext_resource type="Script" uid="uid://c84lkdks07cwk" path="res://spot.gd" id="1_tlwt5"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3xd07"]
 
@@ -11,7 +12,8 @@ size = Vector2(20, 22)
 [node name="world" type="Node2D" unique_id=280545579]
 
 [node name="spot1" type="Area2D" parent="." unique_id=2001070808]
-position = Vector2(22, 159)
+position = Vector2(22, 340)
+script = ExtResource("1_tlwt5")
 metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="spot1" unique_id=1676141323]
@@ -41,3 +43,6 @@ frame = 1
 [node name="CollisionShape2D" type="CollisionShape2D" parent="splat" unique_id=377789056]
 position = Vector2(-1, 0)
 shape = SubResource("RectangleShape2D_jq8tk")
+
+[connection signal="body_entered" from="spot1" to="splat" method="_on_spot_1_body_entered"]
+[connection signal="body_entered" from="spot2" to="splat" method="_on_spot_1_body_entered"]
