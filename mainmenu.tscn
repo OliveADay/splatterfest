@@ -1,3 +1,19 @@
 [gd_scene format=3 uid="uid://ct6uxn64bqyf0"]
 
+[ext_resource type="Theme" uid="uid://dpwfoecnih2bh" path="res://main.tres" id="1_cmhrf"]
+
 [node name="mainmenu" type="CanvasLayer" unique_id=1384783022]
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=931070919]
+offset_right = 1265.0
+offset_bottom = 834.0
+color = Color(0, 0, 0, 1)
+
+[node name="Label" type="Label" parent="." unique_id=2120038394]
+offset_left = 1.0
+offset_top = 3.0
+offset_right = 640.0
+offset_bottom = 35.0
+theme = ExtResource("1_cmhrf")
+text = "Splatter Fest"
+horizontal_alignment = 1
