@@ -6,10 +6,12 @@ extends RigidBody2D
 var i = 0
 var y_range = [20,340]
 var current_target
-var speed = 2
+var start_speed = 2
+var 
+var speed = 0
 
 func _ready() -> void:
-	speed = 2
+	speed = start_speed
 	i = randi_range(0,1)
 	current_target = get_node(targets[i])
 
@@ -22,6 +24,7 @@ func _on_spot_1_body_entered(body: Node2D) -> void:
 	i%=2
 	get_node(targets[i]).position.y = randi_range(y_range[0],y_range[1]) 
 	good_zone.position.y = get_average_y_targets()
+	good_zone.position.x = 323.0+randi_range(-20,20)
 	current_target = get_node(targets[i])
 	
 func get_average_y_targets() -> float:
@@ -30,7 +33,8 @@ func get_average_y_targets() -> float:
 
 func _on_target_good_area_hit() -> void:
 	if speed < 10:
-		speed+=1
+		speed+=0.5
+	$Sprite2D.frame = int(speed/3)+1
 
 
 func _on_target_good_area_reset() -> void:

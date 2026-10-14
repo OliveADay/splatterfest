@@ -34,7 +34,7 @@ metadata/_edit_group_ = true
 shape = SubResource("RectangleShape2D_3xd07")
 
 [node name="splat" type="RigidBody2D" parent="." unique_id=1129235712 node_paths=PackedStringArray("good_zone", "dead_canvas")]
-position = Vector2(316, 167)
+position = Vector2(323, 167)
 gravity_scale = 0.0
 script = ExtResource("1_fj7yv")
 targets = [NodePath("../spot1"), NodePath("../spot2")]
@@ -54,7 +54,7 @@ position = Vector2(-1, 0)
 shape = SubResource("RectangleShape2D_jq8tk")
 
 [node name="target_good_area" type="Area2D" parent="." unique_id=1926519423 node_paths=PackedStringArray("score_label")]
-position = Vector2(316, 167)
+position = Vector2(323, 167)
 script = ExtResource("4_aqk2v")
 score_label = NodePath("../CanvasLayer/Label")
 metadata/_edit_group_ = true
