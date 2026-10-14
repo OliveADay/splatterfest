@@ -2,7 +2,9 @@
 
 [ext_resource type="Texture2D" uid="uid://6lcvfussclm1" path="res://splat-Sheet.png" id="1_f3sb7"]
 [ext_resource type="Script" uid="uid://dhgcvq0rl3i56" path="res://splat.gd" id="1_fj7yv"]
+[ext_resource type="Theme" uid="uid://dpwfoecnih2bh" path="res://main.tres" id="4_036b0"]
 [ext_resource type="Script" uid="uid://dnalx06htl4xn" path="res://target_good_area.gd" id="4_aqk2v"]
+[ext_resource type="Texture2D" uid="uid://cdqmx8gp7jiah" path="res://angery-Sheet.png" id="5_036b0"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3xd07"]
 
@@ -47,9 +49,10 @@ frame = 1
 position = Vector2(-1, 0)
 shape = SubResource("RectangleShape2D_jq8tk")
 
-[node name="target_good_area" type="Area2D" parent="." unique_id=1926519423]
+[node name="target_good_area" type="Area2D" parent="." unique_id=1926519423 node_paths=PackedStringArray("score_label")]
 position = Vector2(316, 167)
 script = ExtResource("4_aqk2v")
+score_label = NodePath("../CanvasLayer/Label")
 metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="target_good_area" unique_id=238458523]
@@ -62,7 +65,66 @@ vframes = 2
 position = Vector2(-1, 0)
 shape = SubResource("RectangleShape2D_4ao1p")
 
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=123659948]
+
+[node name="Label" type="Label" parent="CanvasLayer" unique_id=1425318696]
+texture_filter = 1
+offset_right = 40.0
+offset_bottom = 23.0
+theme = ExtResource("4_036b0")
+text = "score: "
+
+[node name="guy" type="CanvasLayer" parent="." unique_id=2134272506]
+
+[node name="ColorRect" type="ColorRect" parent="guy" unique_id=1347160942]
+offset_right = 658.0
+offset_bottom = 368.0
+color = Color(0.12941177, 0.12941177, 0.12941177, 0.9647059)
+
+[node name="guy_sprite" type="Sprite2D" parent="guy" unique_id=1509765249]
+texture_filter = 1
+position = Vector2(514, 231)
+texture = ExtResource("5_036b0")
+hframes = 2
+vframes = 2
+frame = 1
+
+[node name="ColorRect2" type="ColorRect" parent="guy" unique_id=1105332333]
+offset_right = 433.0
+offset_bottom = 200.0
+color = Color(0, 0, 0, 1)
+
+[node name="Label" type="Label" parent="guy/ColorRect2" unique_id=157633759]
+layout_mode = 0
+offset_right = 430.0
+offset_bottom = 32.0
+theme = ExtResource("4_036b0")
+theme_override_font_sizes/font_size = 32
+text = "heya bastard! click me!!!!"
+autowrap_mode = 2
+
+[node name="dead" type="CanvasLayer" parent="." unique_id=1102321747]
+visible = false
+
+[node name="ColorRect2" type="ColorRect" parent="dead" unique_id=749542728]
+offset_right = 482.0
+offset_bottom = 41.0
+color = Color(0, 0, 0, 0.89411765)
+
+[node name="ColorRect" type="ColorRect" parent="dead" unique_id=1618269508]
+offset_right = 670.0
+offset_bottom = 388.0
+color = Color(0, 0, 0, 0.5294118)
+
+[node name="Label" type="Label" parent="dead" unique_id=588552690]
+offset_right = 640.0
+offset_bottom = 32.0
+theme = ExtResource("4_036b0")
+text = "you fricking died yo"
+
 [connection signal="body_entered" from="spot1" to="splat" method="_on_spot_1_body_entered"]
 [connection signal="body_entered" from="spot2" to="splat" method="_on_spot_1_body_entered"]
 [connection signal="body_entered" from="target_good_area" to="target_good_area" method="_on_body_entered"]
 [connection signal="body_exited" from="target_good_area" to="target_good_area" method="_on_body_exited"]
+[connection signal="hit" from="target_good_area" to="splat" method="_on_target_good_area_hit"]
+[connection signal="reset" from="target_good_area" to="splat" method="_on_target_good_area_reset"]
