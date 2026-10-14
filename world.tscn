@@ -6,6 +6,8 @@
 [ext_resource type="Script" uid="uid://dnalx06htl4xn" path="res://target_good_area.gd" id="4_aqk2v"]
 [ext_resource type="Texture2D" uid="uid://cdqmx8gp7jiah" path="res://angery-Sheet.png" id="5_036b0"]
 [ext_resource type="Script" uid="uid://bpmo4thv6kwuk" path="res://guy.gd" id="5_dwbse"]
+[ext_resource type="Script" uid="uid://bvsijiyljlutp" path="res://unpause.gd" id="7_pkg7o"]
+[ext_resource type="Script" uid="uid://brw5vysg6x8ka" path="res://reload.gd" id="8_gbfbk"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3xd07"]
 
@@ -31,12 +33,13 @@ metadata/_edit_group_ = true
 [node name="CollisionShape2D" type="CollisionShape2D" parent="spot2" unique_id=1636843967]
 shape = SubResource("RectangleShape2D_3xd07")
 
-[node name="splat" type="RigidBody2D" parent="." unique_id=1129235712 node_paths=PackedStringArray("good_zone")]
+[node name="splat" type="RigidBody2D" parent="." unique_id=1129235712 node_paths=PackedStringArray("good_zone", "dead_canvas")]
 position = Vector2(316, 167)
 gravity_scale = 0.0
 script = ExtResource("1_fj7yv")
 targets = [NodePath("../spot1"), NodePath("../spot2")]
 good_zone = NodePath("../target_good_area")
+dead_canvas = NodePath("../dead")
 metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="splat" unique_id=1913605558]
@@ -76,7 +79,7 @@ theme = ExtResource("4_036b0")
 text = "score: "
 
 [node name="guy" type="CanvasLayer" parent="." unique_id=2134272506 node_paths=PackedStringArray("label", "sprite")]
-visible = false
+process_mode = 3
 script = ExtResource("5_dwbse")
 text_bits = ["heya bastard! click me!!!!", "ok so theres a little splat thing right?", "you gotta click when its in the right spot", "otherwise ur fricking dead!!"]
 label = NodePath("ColorRect2/Label")
@@ -109,7 +112,20 @@ theme_override_font_sizes/font_size = 32
 text = "heya bastard! click me!!!!"
 autowrap_mode = 2
 
+[node name="Button" type="Button" parent="guy" unique_id=487330080]
+offset_left = 89.0
+offset_top = 276.0
+offset_right = 333.0
+offset_bottom = 316.0
+theme = ExtResource("4_036b0")
+text = "get playin?"
+
+[node name="unpause" type="Node2D" parent="guy" unique_id=1510244336]
+script = ExtResource("7_pkg7o")
+
 [node name="dead" type="CanvasLayer" parent="." unique_id=1102321747 node_paths=PackedStringArray("label", "sprite")]
+process_mode = 4
+visible = false
 script = ExtResource("5_dwbse")
 text_bits = ["ur fricking dead!", "like what the hell bruh!!"]
 label = NodePath("Label")
@@ -141,9 +157,23 @@ hframes = 2
 vframes = 2
 frame = 2
 
+[node name="Button" type="Button" parent="dead" unique_id=1330785680]
+offset_left = 24.0
+offset_top = 258.0
+offset_right = 362.0
+offset_bottom = 298.0
+theme = ExtResource("4_036b0")
+theme_override_font_sizes/font_size = 24
+text = "back to main menu"
+
+[node name="reload" type="Node2D" parent="dead" unique_id=1781841459]
+script = ExtResource("8_gbfbk")
+
 [connection signal="body_entered" from="spot1" to="splat" method="_on_spot_1_body_entered"]
 [connection signal="body_entered" from="spot2" to="splat" method="_on_spot_1_body_entered"]
 [connection signal="body_entered" from="target_good_area" to="target_good_area" method="_on_body_entered"]
 [connection signal="body_exited" from="target_good_area" to="target_good_area" method="_on_body_exited"]
 [connection signal="hit" from="target_good_area" to="splat" method="_on_target_good_area_hit"]
 [connection signal="reset" from="target_good_area" to="splat" method="_on_target_good_area_reset"]
+[connection signal="pressed" from="guy/Button" to="guy/unpause" method="_on_button_pressed"]
+[connection signal="pressed" from="dead/Button" to="dead/reload" method="_on_button_pressed"]

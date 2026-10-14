@@ -11,8 +11,10 @@ var vowels = ['a','e','o','u','i']
 @export var sprite: Sprite2D
 @export var frame_0 = 0
 @export var frame_1 = 1
+var max_wait_before_clickable = 1
 
 func _ready() -> void:
+	get_tree().paused = true
 	label.text = ""
 
 func _process(delta: float) -> void:
@@ -30,7 +32,7 @@ func _process(delta: float) -> void:
 			current_time = step_time
 		else:
 			current_time-=delta
-	if Input.is_action_just_pressed("click"):
+	if Input.is_action_just_pressed("click") and max_wait_before_clickable <=0:
 		if typing:
 			label.text = current_bit
 			typing = false
@@ -40,8 +42,9 @@ func _process(delta: float) -> void:
 				label.text = ""
 				typing = true
 				i = 0
-			else:
-				visible = false
+	else:
+		max_wait_before_clickable -=delta
+				
 func is_vowel(thingy) -> bool:
 	for letter in vowels:
 		if letter == thingy:

@@ -2,12 +2,14 @@ extends RigidBody2D
 
 @export var targets = []
 @export var good_zone: Node2D
+@export var dead_canvas:CanvasLayer
 var i = 0
 var y_range = [20,340]
 var current_target
 var speed = 2
 
 func _ready() -> void:
+	speed = 2
 	i = randi_range(0,1)
 	current_target = get_node(targets[i])
 
@@ -32,4 +34,7 @@ func _on_target_good_area_hit() -> void:
 
 
 func _on_target_good_area_reset() -> void:
-	speed = 2
+	speed = 0
+	dead_canvas.visible = true
+	dead_canvas.process_mode = Node.PROCESS_MODE_INHERIT
+	
