@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://pe3fo1imx0fo"]
+
+[ext_resource type="Texture2D" uid="uid://c8r1paexr8nud" path="res://static__splat-Sheet.png" id="1_8vf5t"]
+
+[node name="SplatStatic" type="Sprite2D" unique_id=748581040]
+z_index = -1
+texture_filter = 1
+texture = ExtResource("1_8vf5t")
+hframes = 3
+vframes = 2
+frame = 1

@@ -3,11 +3,13 @@ extends RigidBody2D
 @export var targets = []
 @export var good_zone: Node2D
 @export var dead_canvas:CanvasLayer
+var little_one_resource = preload("res://+1.tscn")
+var static_splat_resource = preload("res://splat_static.tscn")
+var static_splats = []
 var i = 0
 var y_range = [20,340]
 var current_target
 var start_speed = 2
-var 
 var speed = 0
 
 func _ready() -> void:
@@ -35,10 +37,20 @@ func _on_target_good_area_hit() -> void:
 	if speed < 10:
 		speed+=0.5
 	$Sprite2D.frame = int(speed/3)+1
+	var little_one = little_one_resource.instantiate()
+	get_tree().root.add_child(little_one)
+	little_one.position = position
+	var static_splat = static_splat_resource.instantiate()
+	get_tree().root.add_child(static_splat)
+	static_splat.position = position
+	static_splat.frame =  $Sprite2D.frame
+	static_splats.append(static_splat)
 
 
 func _on_target_good_area_reset() -> void:
 	speed = 0
 	dead_canvas.visible = true
+	for splat in static_splats:
+		splat.queue_free()
 	dead_canvas.process_mode = Node.PROCESS_MODE_INHERIT
 	
