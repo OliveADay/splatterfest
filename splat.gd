@@ -28,6 +28,7 @@ func _on_spot_1_body_entered(body: Node2D) -> void:
 	good_zone.position.y = get_average_y_targets()
 	good_zone.position.x = 323.0+randi_range(-20,20)
 	current_target = get_node(targets[i])
+	$bounce.play()
 	
 func get_average_y_targets() -> float:
 	return (get_node(targets[0]).position.y+get_node(targets[1]).position.y)/2
@@ -45,6 +46,7 @@ func _on_target_good_area_hit() -> void:
 	static_splat.position = position
 	static_splat.frame =  $Sprite2D.frame
 	static_splats.append(static_splat)
+	$score.play()
 
 
 func _on_target_good_area_reset() -> void:

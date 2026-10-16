@@ -11,6 +11,7 @@ var vowels = ['a','e','o','u','i']
 @export var sprite: Sprite2D
 @export var frame_0 = 0
 @export var frame_1 = 1
+@export var talk_sound: AudioStreamPlayer2D
 var max_wait_before_clickable = 1
 
 func _ready() -> void:
@@ -24,6 +25,7 @@ func _process(delta: float) -> void:
 			label.text+=current_bit[i]
 			if is_vowel(current_bit[i]):
 				sprite.frame = frame_0
+				talk_sound.play()
 			else:
 				sprite.frame = frame_1
 			i+=1

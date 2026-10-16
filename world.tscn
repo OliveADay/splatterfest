@@ -2,12 +2,18 @@
 
 [ext_resource type="Texture2D" uid="uid://6lcvfussclm1" path="res://splat-Sheet.png" id="1_f3sb7"]
 [ext_resource type="Script" uid="uid://dhgcvq0rl3i56" path="res://splat.gd" id="1_fj7yv"]
+[ext_resource type="AudioStream" uid="uid://wgswrean3b51" path="res://bounce.wav" id="3_k3n1d"]
+[ext_resource type="AudioStream" uid="uid://bt5eraw1nawgi" path="res://score.wav" id="4_2o6r5"]
 [ext_resource type="Theme" uid="uid://dpwfoecnih2bh" path="res://main.tres" id="4_036b0"]
 [ext_resource type="Script" uid="uid://dnalx06htl4xn" path="res://target_good_area.gd" id="4_aqk2v"]
 [ext_resource type="Texture2D" uid="uid://cdqmx8gp7jiah" path="res://angery-Sheet.png" id="5_036b0"]
 [ext_resource type="Script" uid="uid://bpmo4thv6kwuk" path="res://guy.gd" id="5_dwbse"]
 [ext_resource type="Script" uid="uid://bvsijiyljlutp" path="res://unpause.gd" id="7_pkg7o"]
 [ext_resource type="Script" uid="uid://brw5vysg6x8ka" path="res://reload.gd" id="8_gbfbk"]
+[ext_resource type="AudioStream" uid="uid://b403ddido1fea" path="res://click.wav" id="9_wse8f"]
+[ext_resource type="AudioStream" uid="uid://dmss4rhs24f4b" path="res://regular_talk.wav" id="10_2o6r5"]
+[ext_resource type="Script" uid="uid://b4cwiiksp5r5y" path="res://play.gd" id="10_ic0uy"]
+[ext_resource type="AudioStream" uid="uid://g5vagllwxv7q" path="res://angyr_1.wav" id="12_70uel"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3xd07"]
 
@@ -53,6 +59,12 @@ frame = 1
 position = Vector2(-1, 0)
 shape = SubResource("RectangleShape2D_jq8tk")
 
+[node name="bounce" type="AudioStreamPlayer2D" parent="splat" unique_id=231517937]
+stream = ExtResource("3_k3n1d")
+
+[node name="score" type="AudioStreamPlayer2D" parent="splat" unique_id=1017087589]
+stream = ExtResource("4_2o6r5")
+
 [node name="target_good_area" type="Area2D" parent="." unique_id=1926519423 node_paths=PackedStringArray("score_label")]
 position = Vector2(323, 167)
 script = ExtResource("4_aqk2v")
@@ -78,12 +90,13 @@ offset_bottom = 23.0
 theme = ExtResource("4_036b0")
 text = "score: "
 
-[node name="guy" type="CanvasLayer" parent="." unique_id=2134272506 node_paths=PackedStringArray("label", "sprite")]
+[node name="guy" type="CanvasLayer" parent="." unique_id=2134272506 node_paths=PackedStringArray("label", "sprite", "talk_sound")]
 process_mode = 3
 script = ExtResource("5_dwbse")
 text_bits = ["heya bastard! click me!!!!", "ok so theres a little splat thing right?", "you gotta click when its in the right spot", "otherwise ur fricking dead!!"]
 label = NodePath("ColorRect2/Label")
 sprite = NodePath("guy_sprite")
+talk_sound = NodePath("talk")
 
 [node name="ColorRect" type="ColorRect" parent="guy" unique_id=1347160942]
 offset_right = 658.0
@@ -123,7 +136,10 @@ text = "get playin?"
 [node name="unpause" type="Node2D" parent="guy" unique_id=1510244336]
 script = ExtResource("7_pkg7o")
 
-[node name="dead" type="CanvasLayer" parent="." unique_id=1102321747 node_paths=PackedStringArray("label", "sprite")]
+[node name="talk" type="AudioStreamPlayer2D" parent="guy" unique_id=628534732]
+stream = ExtResource("10_2o6r5")
+
+[node name="dead" type="CanvasLayer" parent="." unique_id=1102321747 node_paths=PackedStringArray("label", "sprite", "talk_sound")]
 process_mode = 4
 visible = false
 script = ExtResource("5_dwbse")
@@ -132,6 +148,7 @@ label = NodePath("Label")
 sprite = NodePath("Sprite2D")
 frame_0 = 2
 frame_1 = 3
+talk_sound = NodePath("AudioStreamPlayer2D")
 
 [node name="ColorRect2" type="ColorRect" parent="dead" unique_id=749542728]
 offset_right = 577.0
@@ -169,6 +186,13 @@ text = "back to main menu"
 [node name="reload" type="Node2D" parent="dead" unique_id=1781841459]
 script = ExtResource("8_gbfbk")
 
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="dead" unique_id=1945387593]
+stream = ExtResource("12_70uel")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=672527077]
+stream = ExtResource("9_wse8f")
+script = ExtResource("10_ic0uy")
+
 [connection signal="body_entered" from="spot1" to="splat" method="_on_spot_1_body_entered"]
 [connection signal="body_entered" from="spot2" to="splat" method="_on_spot_1_body_entered"]
 [connection signal="body_entered" from="target_good_area" to="target_good_area" method="_on_body_entered"]
@@ -176,4 +200,6 @@ script = ExtResource("8_gbfbk")
 [connection signal="hit" from="target_good_area" to="splat" method="_on_target_good_area_hit"]
 [connection signal="reset" from="target_good_area" to="splat" method="_on_target_good_area_reset"]
 [connection signal="pressed" from="guy/Button" to="guy/unpause" method="_on_button_pressed"]
+[connection signal="pressed" from="guy/Button" to="AudioStreamPlayer2D" method="play_sound"]
 [connection signal="pressed" from="dead/Button" to="dead/reload" method="_on_button_pressed"]
+[connection signal="pressed" from="dead/Button" to="AudioStreamPlayer2D" method="play_sound"]

@@ -2,9 +2,15 @@
 
 [ext_resource type="Theme" uid="uid://dpwfoecnih2bh" path="res://main.tres" id="1_cmhrf"]
 [ext_resource type="Script" uid="uid://b7lo6i6aujhih" path="res://mainmenu.gd" id="1_d2nv2"]
+[ext_resource type="AudioStream" uid="uid://b403ddido1fea" path="res://click.wav" id="3_igs2m"]
+[ext_resource type="Script" uid="uid://b4cwiiksp5r5y" path="res://play.gd" id="4_3pujl"]
 
 [node name="Mainmenu" type="Node2D" unique_id=412932022]
 script = ExtResource("1_d2nv2")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=347131856]
+stream = ExtResource("3_igs2m")
+script = ExtResource("4_3pujl")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=70894608]
 
@@ -40,3 +46,4 @@ theme = ExtResource("1_cmhrf")
 text = "play"
 
 [connection signal="pressed" from="CanvasLayer/Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/Button" to="AudioStreamPlayer2D" method="play_sound"]
