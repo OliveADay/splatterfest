@@ -50,7 +50,10 @@ func _on_target_good_area_hit() -> void:
 func _on_target_good_area_reset() -> void:
 	speed = 0
 	dead_canvas.visible = true
+	var i = 0
 	for splat in static_splats:
 		splat.queue_free()
+		static_splats.remove_at(i)
+		i+=1
 	dead_canvas.process_mode = Node.PROCESS_MODE_INHERIT
 	
